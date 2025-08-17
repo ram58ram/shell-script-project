@@ -17,8 +17,6 @@ if [ $USERID -ne 0 ]; then
 fi
 dnf list installed git
 
-VALIDATE $? "Listing GIT"
-
 if [ $? -ne 0 ]; then
     echo "Installing git..."
     dnf install git -y
