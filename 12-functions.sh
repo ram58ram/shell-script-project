@@ -11,10 +11,14 @@ VALIDATE(){
     fi
 }
 
-if [ $USERID -ne 0 ]; then
-    echo "Please run as root user"
-    exit 1
-fi
+CHECK_ROOT_USER(){
+    if [ $USERID -ne 0 ]; then
+        echo "Please run as root user"
+        exit 1
+    fi
+}
+
+CHECK_ROOT_USER
 dnf list installed git
 
 if [ $? -ne 0 ]; then
