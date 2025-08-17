@@ -10,8 +10,8 @@ USERID=$(id -u)
 
 R="\e[31m"
 G="\e[32m"
-N="\e[0m"]
-
+N="\e[0m"
+N="\e[33m"
 VALIDATE(){
     if [ $1 -ne 0 ]; then
         echo -e "$2 command is... $R FAILED $N" &>> $LOG_FILE
@@ -28,19 +28,28 @@ CHECK_ROOT_USER(){
     fi
 }
 
+USAGE(){
+    echo -e "USAGE is :: $R sudo sh $SCRIPT_NAME package1 package2 ... $N"
+    exit 1
+}
+
 CHECK_ROOT_USER
+
+if [ $# -eq 0 ]; then
+    USAGE
+fi
 
 # sh loops.sh git mysql postfix nginx
 for package in $@ 
 do
-    dnf list installed $package
+    dnf list installed $package  &>> $LOG_FILE
 
     if [ $? -ne 0 ]; then
-        echo "Installing $package..."
-        dnf install $package -y
+        echo "$package is not installed,going to install it..."  &>> $LOG_FILE
+        dnf install $package -y  &>> $LOG_FILE
         VALIDATE $? "Installing $package"
     else
-        echo "$package is already installed."
+        echo "$package is $Y already installed..nothing to do $N"
     fi
 done
 
