@@ -11,7 +11,8 @@ USERID=$(id -u)
 R="\e[31m"
 G="\e[32m"
 N="\e[0m"
-N="\e[33m"
+Y="\e[33m"
+
 VALIDATE(){
     if [ $1 -ne 0 ]; then
         echo -e "$2 command is... $R FAILED $N" &>> $LOG_FILE
@@ -29,7 +30,7 @@ CHECK_ROOT_USER(){
 }
 
 USAGE(){
-    echo -e "USAGE is :: $R sudo sh $SCRIPT_NAME package1 package2 ... $N"
+    echo -e "USAGE is :: $R sudo sh $SCRIPT_NAME.sh package1 package2 ... $N"
     exit 1
 }
 
